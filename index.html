@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MAJESTIC DAWN EVENTS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pV1y9XRpV7kljZu0YRek9OAPD5WzBwHfwSUhUhlfFNvUDsuF6SFIzBfQgaRrU9IvK3U6HZHVk4wU9JxDeo9VXeF1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      line-height: 1.6;
+      background-color: #fff;
+      color: #2C3E50;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 1rem;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 20px;
+    }
+
+    header nav {
+      background: #fff;
+      padding: 20px 0;
+      position: absolute;
+      width: 100%;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav .logo {
+      font-size: 28px;
+      font-weight: bold;
+      color: #D83F87;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: flex-end;
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    nav ul li a {
+      color: #2C3E50;
+      font-weight: 500;
+    }
+
+    /* Hero */
+    .hero {
+      background: url('images/hero.jpg') no-repeat center center/cover;
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      background: #D83F87;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 30px;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #c03975;
+    }
+
+    /* Section */
+    .section {
+      padding: 80px 0;
+    }
+
+    .about, .services, .portfolio, .testimonials, .contact {
+      background: #f9f9f9;
+      margin-top: -40px;
+      border-radius: 20px;
+      padding: 60px 20px;
+    }
+
+    .services .service-grid,
+    .portfolio .grid,
+    .testimonials .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .service-grid div,
+    .testimonial-grid div {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+
+    .service-grid i,
+    .testimonial-grid i {
+      font-size: 32px;
+      color: #D83F87;
+      margin-bottom: 15px;
+    }
+
+    .portfolio img {
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .portfolio img:hover {
+      transform: scale(1.03);
+    }
+
+    .instagram-feed {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 20px 0;
+    }
+
+    .instagram-feed img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    footer {
+      background: #2C3E50;
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    footer .socials a {
+      margin: 0 10px;
+      color: white;
+      font-size: 20px;
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav class="container">
+    <div class="logo">MAJESTIC DAWN EVENTS</div>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#portfolio">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Your Dream Event Starts Here</h1>
+    <p>We craft unforgettable moments that linger in memories forever.</p>
+    <a href="#contact" class="btn">Book Your Event</a>
+  </div>
+</section>
+
+<section id="about" class="section about container">
+  <h2>About Us</h2>
+  <p>Majestic Dawn Events was born from a passion for creating magical experiences. From intimate gatherings to grand celebrations, we bring elegance, creativity, and precision to every event.</p>
+</section>
+
+<section id="services" class="section services container">
+  <h2>Our Services</h2>
+  <div class="service-grid">
+    <div><i class="fas fa-glass-cheers"></i><h3>Weddings</h3><p>Elegance meets love in every detail of your special day.</p></div>
+    <div><i class="fas fa-building"></i><h3>Corporate Events</h3><p>Professionalism wrapped in style — conferences, launches, and more.</p></div>
+    <div><i class="fas fa-birthday-cake"></i><h3>Birthday Parties</h3><p>From kids to adults, we make birthdays unforgettable.</p></div>
+    <div><i class="fas fa-baby-carriage"></i><h3>Baby Showers</h3><p>Cherish the joy of new beginnings with expert planning.</p></div>
+    <div><i class="fas fa-music"></i><h3>Festivals & Concerts</h3><p>Experience crowd-pleasing events that buzz with energy.</p></div>
+    <div><i class="fas fa-user-tie"></i><h3>MC & Coordination</h3><p>Expert hosts and coordinators ensure everything runs smoothly.</p></div>
+  </div>
+</section>
+
+<section id="portfolio" class="section portfolio container">
+  <h2>Portfolio</h2>
+  <div class="grid">
+    <img src="images/wedding.jpg" alt="Wedding Event">
+    <img src="images/birthday.jpg" alt="Birthday Party">
+    <img src="images/corporate.jpg" alt="Corporate Event">
+    <img src="images/baby-shower.jpg" alt="Baby Shower">
+  </div>
+</section>
+
+<!-- Optional: Instagram Feed -->
+<section class="section container">
+  <h2>Follow Us on Instagram</h2>
+  <div class="instagram-feed">
+    <img src="images/insta1.jpg" alt="Instagram post">
+    <img src="images/insta2.jpg" alt="Instagram post">
+    <img src="images/insta3.jpg" alt="Instagram post">
+    <img src="images/insta4.jpg" alt="Instagram post">
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section testimonials container">
+  <h2>What Our Clients Say</h2>
+  <div class="testimonial-grid">
+    <div>
+      <i class="fas fa-quote-left"></i>
+      <p>"They transformed our wedding into a magical dream. Everything was perfect!"</p>
+      <strong>- Sarah & James</strong>
+    </div>
+    <div>
+      <i class="fas fa-quote-left"></i>
+      <p>"Handled every detail flawlessly. Highly recommend Majestic Dawn!"</p>
+      <strong>- Maya A.</strong>
+    </div>
+    <div>
+      <i class="fas fa-quote-left"></i>
+      <p>"The best choice I made for my daughter’s sweet sixteen."</p>
+      <strong>- Linda B.</strong>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="section contact container">
+  <h2>Contact Us</h2>
+  <form class="contact-form">
+    <input type="text" placeholder="Your Name" required>
+    <input type="email" placeholder="Your Email" required>
+    <textarea rows="5" placeholder="Your Message" required></textarea>
+    <button type="submit" class="btn">Send Message</button>
+  </form>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2025 MAJESTIC DAWN EVENTS. All Rights Reserved.</p>
+  <div class="socials">
+    <a href="#"><i class="fab fa-facebook-f"></i></a>
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-pinterest"></i></a>
+  </div>
+</footer>
+
+</body>
+</html>
