@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Majestic Dawn Events | Premier Event Planning Services</title>
     <meta name="description" content="Majestic Dawn Events offers professional, creative event planning for weddings, corporate functions, and social gatherings. Let us make your next event unforgettable.">
-    <meta name="keywords" content="event planning, wedding planner, corporate events, party planner, event management, Majestic Dawn Events"> <meta name="robots" content="index, follow">
+    <meta name="keywords" content="event planning, wedding planner, corporate events, party planner, event management, Majestic Dawn Events">
+    <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:url" content="YOUR_WEBSITE_URL"> <meta property="og:title" content="Majestic Dawn Events | Premier Event Planning Services">
     <meta property="og:description" content="Creating unforgettable moments with meticulous planning and stunning design.">
@@ -82,13 +83,18 @@
             background: linear-gradient(to right, theme('colors.primary'), theme('colors.secondary'));
             margin-top: 4px;
         }
-        /* Ensure fixed header doesn't overlap content */
+        /* Dynamic body padding for fixed header */
         body {
-            padding-top: 80px; /* Adjust based on header height */
+            /* Padding will be set dynamically by JS */
+            padding-top: 80px; /* Default fallback */
         }
         /* Mobile menu transition */
-        #mobile-menu {
+        #mobile-menu-content { /* Target the inner div for transform */
             transition: transform 0.3s ease-in-out;
+        }
+        /* Prevent body scroll when mobile menu is open */
+        .overflow-hidden {
+             overflow: hidden;
         }
     </style>
 
@@ -97,9 +103,7 @@
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "Majestic Dawn Events",
-      "image": "YOUR_LOGO_OR_HERO_IMAGE_URL", // Replace with actual URL
-      "url": "YOUR_WEBSITE_URL", // Replace with actual URL
-      "telephone": "+1-555-123-4567",
+      "image": "YOUR_ACTUAL_LOGO_URL", "url": "YOUR_WEBSITE_URL", "telephone": "+1-555-123-4567",
       "description": "Premier event planning services for weddings, corporate events, and social gatherings.",
       "address": {
         "@type": "PostalAddress",
@@ -129,23 +133,19 @@
           "closes": "16:00"
         }
       ],
-      "priceRange": "$$$", // Optional: Adjust price range (e.g., $, $$, $$$)
-      "servesCuisine": "", // Not applicable
-      "acceptsReservations": "True"
+      "priceRange": "$$$", "servesCuisine": "", "acceptsReservations": "True"
     }
     </script>
 
 </head>
 <body class="bg-light text-dark font-sans antialiased">
 
-    <header id="main-header" class="bg-white/95 backdrop-blur-sm shadow-md fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4">
+    <header id="main-header" class="bg-white/95 backdrop-blur-sm shadow-md fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-2">
         <div class="container mx-auto px-4 flex justify-between items-center">
-            <a href="#home" class="flex items-center">
-                <span class="text-2xl md:text-3xl font-extrabold">
-                    <span class="bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text">MAJESTIC DAWN</span>
-                    <span class="block text-xs text-secondary font-medium tracking-wider">EVENTS</span>
-                </span>
-            </a>
+            <a href="#home" class="flex items-center flex-shrink-0">
+                <img src="https://placehold.co/200x60/6c5ce7/ffffff?text=Majestic+Dawn+Logo"
+                     alt="Majestic Dawn Events Logo"
+                     class="h-14 md:h-16 w-auto" loading="eager" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\'text-xl font-bold text-secondary\'>Majestic Dawn Events</span>';"> </a>
 
             <nav class="hidden md:block">
                 <ul class="flex space-x-6 lg:space-x-8">
@@ -166,7 +166,7 @@
         </div>
 
         <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden">
-             <div class="fixed top-0 right-0 h-full w-64 bg-white shadow-xl p-6 transform translate-x-full">
+             <div id="mobile-menu-content" class="fixed top-0 right-0 h-full w-64 max-w-[80%] bg-white shadow-xl p-6 transform translate-x-full">
                  <button id="close-menu-button" aria-label="Close Menu" class="absolute top-4 right-4 text-dark">
                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                  </button>
@@ -373,10 +373,10 @@
                     <div class="flex transition-transform duration-500 ease-in-out">
                         </div>
                 </div>
-                 <button id="prev-testimonial" aria-label="Previous Testimonial" class="absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-10 md:-translate-x-16 bg-white/70 hover:bg-white rounded-full p-2 shadow-md text-secondary focus:outline-none transition">
+                 <button id="prev-testimonial" aria-label="Previous Testimonial" class="absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-4 sm:-translate-x-10 md:-translate-x-16 bg-white/70 hover:bg-white rounded-full p-2 shadow-md text-secondary focus:outline-none transition">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                 </button>
-                <button id="next-testimonial" aria-label="Next Testimonial" class="absolute top-1/2 right-0 transform -translate-y-1/2 translate-x-10 md:translate-x-16 bg-white/70 hover:bg-white rounded-full p-2 shadow-md text-secondary focus:outline-none transition">
+                <button id="next-testimonial" aria-label="Next Testimonial" class="absolute top-1/2 right-0 transform -translate-y-1/2 translate-x-4 sm:translate-x-10 md:translate-x-16 bg-white/70 hover:bg-white rounded-full p-2 shadow-md text-secondary focus:outline-none transition">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                 </button>
                  <div id="testimonial-dots" class="flex justify-center space-x-2 mt-6">
@@ -490,11 +490,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
                 <div class="md:col-span-2 lg:col-span-1">
                     <a href="#home" class="inline-block mb-4">
-                         <span class="text-2xl font-extrabold">
-                            <span class="bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text">MAJESTIC DAWN</span>
-                            <span class="block text-xs text-secondary font-medium tracking-wider">EVENTS</span>
-                        </span>
-                    </a>
+                         <img src="https://placehold.co/150x45/6c5ce7/ffffff?text=Majestic+Dawn+Logo"
+                              alt="Majestic Dawn Events Logo"
+                              class="h-12 w-auto" loading="lazy" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\'text-xl font-bold text-secondary\'>Majestic Dawn Events</span>';"> </a>
                     <p class="text-sm mb-5 leading-relaxed">Creating unforgettable experiences for life's most important moments. Passion, creativity, and attention to detail.</p>
                     <div class="flex space-x-3">
                         <a href="#" aria-label="Facebook" class="w-9 h-9 flex items-center justify-center bg-gray-700 hover:bg-primary rounded-full text-white transition duration-200">
@@ -556,7 +554,7 @@
         </div>
     </footer>
 
-    <button id="back-to-top" aria-label="Back to top" class="fixed bottom-5 right-5 bg-primary/80 hover:bg-primary text-white p-3 rounded-full shadow-lg hidden transition-opacity duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+    <button id="back-to-top" aria-label="Back to top" class="fixed bottom-5 right-5 bg-primary/80 hover:bg-primary text-white p-3 rounded-full shadow-lg hidden opacity-0 transition-opacity duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary z-30">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
     </button>
 
@@ -566,393 +564,262 @@
             const hamburgerButton = document.getElementById('hamburger-button');
             const closeMenuButton = document.getElementById('close-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
-            const mobileMenuContent = mobileMenu.querySelector('div'); // The inner div with transform
+            const mobileMenuContent = document.getElementById('mobile-menu-content');
             const mobileLinks = document.querySelectorAll('.mobile-link');
             const backToTopButton = document.getElementById('back-to-top');
             const currentYearSpan = document.getElementById('current-year');
+            const body = document.body;
 
-            // Set current year in footer
+            function setBodyPadding() {
+                const headerHeight = header ? header.offsetHeight : 80;
+                body.style.paddingTop = `${headerHeight}px`;
+            }
+            setBodyPadding();
+            window.addEventListener('resize', setBodyPadding);
+            window.addEventListener('load', setBodyPadding);
+
             if (currentYearSpan) {
                 currentYearSpan.textContent = new Date().getFullYear();
             }
 
-            // --- Header Scroll Effect ---
             let lastScrollY = window.scrollY;
             window.addEventListener('scroll', function() {
-                if (window.scrollY > 50) {
+                const currentScrollY = window.scrollY;
+                if (currentScrollY > 50) {
                     header.classList.add('py-2', 'shadow-xl');
                     header.classList.remove('py-4');
                 } else {
                     header.classList.add('py-4');
                     header.classList.remove('py-2', 'shadow-xl');
                 }
-
-                 // Show/hide back to top button
-                if (window.scrollY > 300) {
-                    backToTopButton.classList.remove('hidden');
-                    backToTopButton.classList.add('opacity-100');
+                setBodyPadding();
+                if (currentScrollY > 300) {
+                    backToTopButton.classList.remove('hidden', 'opacity-0');
                 } else {
-                     backToTopButton.classList.add('hidden');
-                     backToTopButton.classList.remove('opacity-100');
+                     backToTopButton.classList.add('hidden', 'opacity-0');
                 }
-
-                lastScrollY = window.scrollY;
+                lastScrollY = currentScrollY;
             });
 
-            // --- Mobile Menu Toggle ---
             hamburgerButton.addEventListener('click', () => {
                 mobileMenu.classList.remove('hidden');
-                // Use setTimeout to allow the display change to register before starting transition
                 setTimeout(() => {
                     mobileMenuContent.classList.remove('translate-x-full');
                     mobileMenuContent.classList.add('translate-x-0');
-                    document.body.style.overflow = 'hidden'; // Prevent background scroll
+                    body.classList.add('overflow-hidden');
                 }, 10);
             });
 
             const closeMenu = () => {
                 mobileMenuContent.classList.add('translate-x-full');
                 mobileMenuContent.classList.remove('translate-x-0');
-                // Hide the overlay after the transition completes
                 setTimeout(() => {
                     mobileMenu.classList.add('hidden');
-                    document.body.style.overflow = ''; // Restore scroll
-                }, 300); // Match transition duration
+                    body.classList.remove('overflow-hidden');
+                }, 300);
             };
-
             closeMenuButton.addEventListener('click', closeMenu);
-            // Close menu if clicking outside the menu content
             mobileMenu.addEventListener('click', (e) => {
                 if (e.target === mobileMenu) {
                     closeMenu();
                 }
             });
-
-            // Close mobile menu when a link is clicked
             mobileLinks.forEach(link => {
                 link.addEventListener('click', closeMenu);
             });
 
-            // --- Smooth Scrolling ---
              document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     const href = this.getAttribute('href');
-                    // Ensure it's a valid internal link and not just "#"
                     if (href && href.startsWith('#') && href.length > 1) {
                         const targetElement = document.querySelector(href);
                         if (targetElement) {
                             e.preventDefault();
-                            const headerOffset = header.offsetHeight || 80; // Get header height or default
+                            const headerOffset = header.offsetHeight || 80;
                             const elementPosition = targetElement.getBoundingClientRect().top;
                             const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
                             window.scrollTo({
                                 top: offsetPosition,
                                 behavior: "smooth"
                             });
-
-                            // Close mobile menu if open after clicking a link
-                            if (!mobileMenu.classList.contains('hidden')) {
-                                closeMenu();
-                            }
                         }
                     }
                 });
             });
 
-            // --- Back to Top Button ---
             if (backToTopButton) {
                 backToTopButton.addEventListener('click', () => {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             }
 
-            // --- Portfolio Filtering ---
             const filterContainer = document.getElementById('portfolio-filters');
             const portfolioGrid = document.getElementById('portfolio-grid');
-            const portfolioItems = portfolioGrid.querySelectorAll('.portfolio-item');
-
             if (filterContainer && portfolioGrid) {
+                 const portfolioItems = portfolioGrid.querySelectorAll('.portfolio-item');
                 filterContainer.addEventListener('click', (e) => {
                     if (e.target.classList.contains('filter-btn')) {
-                        // Update active button state
-                        filterContainer.querySelector('.active').classList.remove('active');
-                        e.target.classList.add('active');
-
+                        filterContainer.querySelector('.active').classList.remove('active', 'bg-gradient-to-r', 'from-primary', 'to-secondary', 'text-white');
+                        filterContainer.querySelector('.active').classList.add('bg-gray-100', 'text-gray-700');
+                        e.target.classList.add('active', 'bg-gradient-to-r', 'from-primary', 'to-secondary', 'text-white');
+                        e.target.classList.remove('bg-gray-100', 'text-gray-700');
                         const filterValue = e.target.getAttribute('data-filter');
-
                         portfolioItems.forEach(item => {
                             const itemCategory = item.getAttribute('data-category');
                             const shouldShow = filterValue === 'all' || itemCategory === filterValue;
-
-                            // Add transition classes for smooth filtering
-                            item.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
-
+                            item.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out, max-height 0.3s ease-out, margin 0.3s ease-out, padding 0.3s ease-out';
                             if (shouldShow) {
+                                item.classList.remove('hidden');
+                                void item.offsetWidth;
                                 item.style.opacity = '1';
                                 item.style.transform = 'scale(1)';
+                                item.style.maxHeight = '1000px';
+                                item.style.marginTop = '';
+                                item.style.marginBottom = '';
+                                item.style.paddingTop = '';
+                                item.style.paddingBottom = '';
                                 item.style.pointerEvents = 'auto';
-                                // Use setTimeout to avoid display:none interfering with transition
-                                setTimeout(() => {
-                                    if (item.classList.contains('hidden')) {
-                                        item.classList.remove('hidden');
-                                    }
-                                }, 0); // Delay slightly
                             } else {
                                 item.style.opacity = '0';
                                 item.style.transform = 'scale(0.95)';
+                                item.style.maxHeight = '0';
+                                item.style.marginTop = '0';
+                                item.style.marginBottom = '0';
+                                item.style.paddingTop = '0';
+                                item.style.paddingBottom = '0';
                                 item.style.pointerEvents = 'none';
                                 setTimeout(() => {
                                     item.classList.add('hidden');
-                                }, 300); // Hide after transition
+                                }, 300);
                             }
                         });
                     }
                 });
             }
 
-
-            // --- Testimonial Slider ---
             const testimonialsData = [
-                {
-                    text: "Majestic Dawn Events transformed our wedding into something beyond our wildest dreams. Their attention to detail and creative vision were exceptional. Every moment was perfect!",
-                    name: "Sarah & Michael Johnson",
-                    role: "Wedding Clients",
-                    img: "https://placehold.co/100x100/e0e7ff/4338ca?text=SJ"
-                },
-                {
-                    text: "Working with this team for our company's annual gala was the best decision. They handled everything professionally, from vendor coordination to last-minute changes. Exceeded expectations!",
-                    name: "Robert Chen",
-                    role: "Marketing Director, TechCorp",
-                    img: "https://placehold.co/100x100/c7d2fe/3730a3?text=RC"
-                },
-                {
-                    text: "The themed birthday party they created for my daughter was magical! They captured her personality perfectly and created an immersive experience. Worth every penny!",
-                    name: "Jessica Martinez",
-                    role: "Birthday Party Client",
-                    img: "https://placehold.co/100x100/fecaca/991b1b?text=JM"
-                },
-                 {
-                    text: "Flawless execution for our product launch event. Majestic Dawn Events ensured everything ran smoothly, allowing us to focus on our guests and presentation. Highly recommended.",
-                    name: "David Lee",
-                    role: "CEO, Innovate Solutions",
-                    img: "https://placehold.co/100x100/d1fae5/065f46?text=DL"
-                }
+                { text: "Majestic Dawn Events transformed our wedding... Every moment was perfect!", name: "Sarah & Michael Johnson", role: "Wedding Clients", img: "https://placehold.co/100x100/e0e7ff/4338ca?text=SJ" },
+                { text: "Working with this team for our company's annual gala was the best decision... Exceeded expectations!", name: "Robert Chen", role: "Marketing Director, TechCorp", img: "https://placehold.co/100x100/c7d2fe/3730a3?text=RC" },
+                { text: "The themed birthday party they created for my daughter was magical!... Worth every penny!", name: "Jessica Martinez", role: "Birthday Party Client", img: "https://placehold.co/100x100/fecaca/991b1b?text=JM" },
+                { text: "Flawless execution for our product launch event... Highly recommended.", name: "David Lee", role: "CEO, Innovate Solutions", img: "https://placehold.co/100x100/d1fae5/065f46?text=DL" }
             ];
-
-            const slider = document.getElementById('testimonial-slider').querySelector('div');
+            const sliderContainer = document.getElementById('testimonial-slider');
+            const slider = sliderContainer ? sliderContainer.querySelector('div') : null;
             const dotsContainer = document.getElementById('testimonial-dots');
             const prevBtn = document.getElementById('prev-testimonial');
             const nextBtn = document.getElementById('next-testimonial');
             let currentTestimonialIndex = 0;
             let testimonialInterval;
+            let resizeTimeout;
 
             function renderTestimonials() {
-                slider.innerHTML = ''; // Clear existing
-                dotsContainer.innerHTML = ''; // Clear existing dots
-
+                if (!slider || !dotsContainer) return;
+                slider.innerHTML = '';
+                dotsContainer.innerHTML = '';
                 testimonialsData.forEach((testimonial, index) => {
-                    // Create testimonial item
                     const item = document.createElement('div');
-                    item.className = 'w-full flex-shrink-0 p-6 md:p-10 bg-white rounded-xl shadow-lg relative';
-                    item.innerHTML = `
-                        <div class="absolute top-4 left-4 text-7xl text-primary/10 font-serif opacity-80 z-0 select-none">“</div>
-                        <div class="relative z-10">
-                            <p class="text-lg md:text-xl italic text-gray-600 mb-6">"${testimonial.text}"</p>
-                            <div class="flex items-center justify-center sm:justify-start">
-                                <img src="${testimonial.img}" alt="${testimonial.name}" class="w-14 h-14 rounded-full object-cover mr-4 border-2 border-secondary/50 shadow-sm" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/100x100/cccccc/666666?text=??';">
-                                <div>
-                                    <h4 class="font-bold text-dark">${testimonial.name}</h4>
-                                    <p class="text-sm text-gray-500">${testimonial.role}</p>
-                                </div>
-                            </div>
-                        </div>
-                    `;
+                    item.className = 'w-full min-w-full flex-shrink-0 p-6 md:p-10 bg-white rounded-xl shadow-lg relative';
+                    item.innerHTML = `<div class="absolute top-4 left-4 text-7xl text-primary/10 font-serif opacity-80 z-0 select-none">“</div><div class="relative z-10"><p class="text-lg md:text-xl italic text-gray-600 mb-6">"${testimonial.text}"</p><div class="flex items-center justify-center text-center sm:text-left sm:justify-start"><img src="${testimonial.img}" alt="${testimonial.name}" class="w-14 h-14 rounded-full object-cover mr-4 border-2 border-secondary/50 shadow-sm flex-shrink-0" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/100x100/cccccc/666666?text=??';"><div><h4 class="font-bold text-dark">${testimonial.name}</h4><p class="text-sm text-gray-500">${testimonial.role}</p></div></div></div>`;
                     slider.appendChild(item);
-
-                    // Create dot indicator
-                     const dot = document.createElement('button');
-                     dot.className = `w-3 h-3 rounded-full transition-colors duration-300 ${index === 0 ? 'bg-primary' : 'bg-gray-300 hover:bg-gray-400'}`;
-                     dot.setAttribute('aria-label', `Go to testimonial ${index + 1}`);
-                     dot.addEventListener('click', () => {
-                         goToTestimonial(index);
-                         resetInterval();
-                     });
-                     dotsContainer.appendChild(dot);
+                    const dot = document.createElement('button');
+                    dot.className = `w-3 h-3 rounded-full transition-colors duration-300 ${index === 0 ? 'bg-primary' : 'bg-gray-300 hover:bg-gray-400'}`;
+                    dot.setAttribute('aria-label', `Go to testimonial ${index + 1}`);
+                    dot.addEventListener('click', () => { goToTestimonial(index); resetInterval(); });
+                    dotsContainer.appendChild(dot);
                 });
-                 updateSliderPosition(); // Initial position
+                 updateSliderPosition();
                  updateDots();
             }
-
             function updateSliderPosition() {
-                const itemWidth = slider.children[0].offsetWidth;
+                 if (!slider || slider.children.length === 0) return;
+                const itemWidth = sliderContainer.offsetWidth;
                 slider.style.transform = `translateX(-${currentTestimonialIndex * itemWidth}px)`;
             }
-
             function updateDots() {
+                 if (!dotsContainer) return;
                 Array.from(dotsContainer.children).forEach((dot, index) => {
                     dot.className = `w-3 h-3 rounded-full transition-colors duration-300 ${index === currentTestimonialIndex ? 'bg-primary' : 'bg-gray-300 hover:bg-gray-400'}`;
                 });
             }
-
             function goToTestimonial(index) {
                 currentTestimonialIndex = index;
-                if (currentTestimonialIndex < 0) {
-                    currentTestimonialIndex = testimonialsData.length - 1;
-                } else if (currentTestimonialIndex >= testimonialsData.length) {
-                    currentTestimonialIndex = 0;
-                }
-                updateSliderPosition();
-                updateDots();
+                if (currentTestimonialIndex < 0) currentTestimonialIndex = testimonialsData.length - 1;
+                else if (currentTestimonialIndex >= testimonialsData.length) currentTestimonialIndex = 0;
+                updateSliderPosition(); updateDots();
             }
+            function nextTestimonial() { goToTestimonial(currentTestimonialIndex + 1); }
+            function prevTestimonial() { goToTestimonial(currentTestimonialIndex - 1); }
+            function startInterval() { if (testimonialInterval) clearInterval(testimonialInterval); testimonialInterval = setInterval(nextTestimonial, 6000); }
+            function resetInterval() { clearInterval(testimonialInterval); startInterval(); }
+            function handleResize() { clearTimeout(resizeTimeout); resizeTimeout = setTimeout(updateSliderPosition, 150); }
 
-             function nextTestimonial() {
-                goToTestimonial(currentTestimonialIndex + 1);
-            }
-
-            function prevTestimonial() {
-                goToTestimonial(currentTestimonialIndex - 1);
-            }
-
-            function startInterval() {
-                testimonialInterval = setInterval(nextTestimonial, 6000); // Change every 6 seconds
-            }
-
-            function resetInterval() {
-                clearInterval(testimonialInterval);
-                startInterval();
-            }
-
-            // Initialize Testimonials
             if (slider && dotsContainer && prevBtn && nextBtn) {
-                renderTestimonials();
-                startInterval();
-
-                nextBtn.addEventListener('click', () => {
-                    nextTestimonial();
-                    resetInterval();
-                });
-                prevBtn.addEventListener('click', () => {
-                    prevTestimonial();
-                    resetInterval();
-                });
-
-                 // Recalculate slider position on window resize
-                window.addEventListener('resize', updateSliderPosition);
+                renderTestimonials(); startInterval();
+                nextBtn.addEventListener('click', () => { nextTestimonial(); resetInterval(); });
+                prevBtn.addEventListener('click', () => { prevTestimonial(); resetInterval(); });
+                window.addEventListener('resize', handleResize);
             }
 
-
-            // --- Contact Form Submission ---
             const eventForm = document.getElementById('event-form');
             const successMessage = document.getElementById('form-success-message');
-            const errorMessage = document.getElementById('form-error-message'); // Optional error message div
-
+            const errorMessage = document.getElementById('form-error-message');
             if (eventForm) {
                 eventForm.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    // Hide previous messages
                     successMessage.classList.add('hidden');
                     if (errorMessage) errorMessage.classList.add('hidden');
-
-                    // Basic validation check (more robust validation can be added)
-                    const name = eventForm.querySelector('#name').value;
-                    const email = eventForm.querySelector('#email').value;
+                    const name = eventForm.querySelector('#name').value.trim();
+                    const email = eventForm.querySelector('#email').value.trim();
                     const eventType = eventForm.querySelector('#event-type').value;
-                    const message = eventForm.querySelector('#message').value;
-
-                    if (!name || !email || !eventType || !message) {
-                         // Handle basic validation error display if needed
+                    const message = eventForm.querySelector('#message').value.trim();
+                    let isValid = true; let errorText = "Please fill out all required fields correctly.";
+                    if (!name) isValid = false;
+                    if (!email || !/\S+@\S+\.\S+/.test(email)) { isValid = false; errorText = "Please enter a valid email address."; }
+                    if (!eventType) isValid = false; if (!message) isValid = false;
+                    if (!isValid) {
                          console.error("Form validation failed");
-                         if (errorMessage) {
-                             errorMessage.textContent = "Please fill out all required fields.";
-                             errorMessage.classList.remove('hidden');
-                         }
-                         return; // Stop submission
+                         if (errorMessage) { errorMessage.textContent = errorText; errorMessage.classList.remove('hidden'); }
+                         return;
                     }
-
-                    // --- Simulate form submission ---
-                    // In a real application, you would send data to a server here using fetch()
                     console.log('Form submitted (simulated)');
-                    // Display success message
-                    successMessage.classList.remove('hidden');
-                    eventForm.reset(); // Clear the form
-
-                    // Optionally hide success message after a few seconds
-                    setTimeout(() => {
-                        successMessage.classList.add('hidden');
-                    }, 5000);
-
-                    // --- Example using fetch (replace with your actual endpoint) ---
-                    /*
-                    const formData = new FormData(eventForm);
-                    fetch('/your-api-endpoint', {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json(); // or response.text()
-                    })
-                    .then(data => {
-                        console.log('Success:', data);
-                        successMessage.classList.remove('hidden');
-                        eventForm.reset();
-                        setTimeout(() => successMessage.classList.add('hidden'), 5000);
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                        if (errorMessage) {
-                             errorMessage.textContent = "Submission failed. Please try again.";
-                             errorMessage.classList.remove('hidden');
-                             setTimeout(() => errorMessage.classList.add('hidden'), 5000);
-                        }
-                    });
-                    */
-                    // --- End of fetch example ---
+                    successMessage.classList.remove('hidden'); eventForm.reset();
+                    setTimeout(() => { successMessage.classList.add('hidden'); }, 5000);
+                    // --- Add actual fetch() call here ---
                 });
             }
 
-             // --- Newsletter Form Submission ---
             const newsletterForm = document.getElementById('newsletter-form');
             const newsletterSuccess = document.getElementById('newsletter-success');
             if (newsletterForm && newsletterSuccess) {
                 newsletterForm.addEventListener('submit', (e) => {
                     e.preventDefault();
-                    // Simulate submission
-                    console.log('Newsletter subscribed (simulated)');
-                    newsletterSuccess.classList.remove('hidden');
-                    newsletterForm.reset();
+                    const emailInput = newsletterForm.querySelector('#newsletter-email');
+                    const email = emailInput.value.trim();
+                    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+                         emailInput.focus(); console.error("Invalid newsletter email"); return;
+                    }
+                    console.log('Newsletter subscribed (simulated):', email);
+                    newsletterSuccess.classList.remove('hidden'); newsletterForm.reset();
                     setTimeout(() => newsletterSuccess.classList.add('hidden'), 4000);
-                    // Add actual fetch() call here to subscribe user
+                    // Add actual fetch() call here
                 });
             }
 
-
-            // --- Scroll Reveal Animations ---
             const revealElements = document.querySelectorAll('.reveal');
-
-            const revealObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        // Optional: Unobserve after revealing to save resources
-                        // observer.unobserve(entry.target);
-                    }
-                    // Optional: Reset animation if element scrolls out of view
-                    // else {
-                    //     entry.target.classList.remove('visible');
-                    // }
-                });
-            }, {
-                threshold: 0.1 // Trigger when 10% of the element is visible
-                // rootMargin: "-50px 0px -50px 0px" // Adjust trigger point
-            });
-
-            revealElements.forEach(el => {
-                revealObserver.observe(el);
-            });
+            if ('IntersectionObserver' in window) {
+                const revealObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                revealElements.forEach(el => { revealObserver.observe(el); });
+            } else {
+                 console.warn("IntersectionObserver not supported. Reveal animations disabled.");
+                 revealElements.forEach(el => { el.classList.add('visible'); });
+            }
 
         }); // End DOMContentLoaded
     </script>
