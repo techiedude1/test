@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Custom Barcode Generator</title>
     <style>
+        /* --- CSS --- */
         body {
             font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Align to top */
+            align-items: flex-start;
             min-height: 100vh;
             background-color: #f4f4f4;
             margin: 0;
@@ -24,7 +25,7 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
             width: 100%;
-            max-width: 600px; /* Adjust as needed */
+            max-width: 600px;
         }
 
         h1 {
@@ -45,18 +46,18 @@
         }
 
         .input-section input[type="text"] {
-            width: calc(100% - 16px); /* Account for padding */
+            width: calc(100% - 16px);
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 1rem;
-            box-sizing: border-box; /* Include padding in width */
+            box-sizing: border-box;
         }
 
         .date-fields {
             display: flex;
             align-items: center;
-            gap: 5px; /* Space between elements */
+            gap: 5px;
         }
 
         .exp-label {
@@ -66,7 +67,7 @@
         }
 
         .date-part {
-            width: 50px; /* Smaller width for date parts */
+            width: 50px;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -79,26 +80,55 @@
             color: #555;
         }
 
-        /* This is the preview area for the barcode */
-        #barcodeDisplay {
-            margin-top: 10px;
-            text-align: center;
-            padding: 10px;
-            border: 1px dashed #eee;
-            min-height: 80px;
+        /* Barcode preview area (visible as you type) */
+        #barcodePreviewArea {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            text-align: left;
+            display: flex; /* Use flex to align items nicely */
+            flex-direction: column; /* Stack items vertically */
+            align-items: center; /* Center items horizontally within the preview */
+            gap: 10px; /* Space between elements */
+            min-height: 150px; /* Ensure some height */
+        }
+
+        #barcodePreviewArea .preview-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            width: 100%; /* Take full width for alignment */
+            text-align: center; /* Center title */
+        }
+
+        #barcodePreviewArea .preview-barcode-container {
+            text-align: center; /* Center the barcode within its container */
+            width: 100%; /* Take full width */
+            padding: 10px 0; /* Add some padding */
+            border: 1px dashed #eee; /* Visual cue */
+            min-height: 70px; /* For rendering barcode */
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* Style for the hidden printable area */
+        /* Styling for the barcode SVG itself within the PREVIEW */
+        #barcodePreviewSvg {
+            max-width: 100%;
+            height: auto;
+            display: block; /* Remove extra space below SVG */
+        }
+
+        /* Hidden area for capture */
         .capture-area {
-            display: none; /* Hide this from the user's direct view */
+            display: none; /* Hidden from user view */
             margin-top: 30px;
             padding: 20px;
             border: 1px solid #ddd;
             background-color: #f9f9f9;
-            width: fit-content; /* Make it as wide as its content */
+            width: fit-content;
         }
 
         .printable-content {
@@ -127,11 +157,11 @@
             text-align: center;
         }
 
-        /* Styling for the barcode SVG itself within the printable area */
+        /* Styling for the barcode SVG itself within the CAPTURE AREA */
         #barcodeSvg {
             max-width: 100%;
             height: auto;
-            display: block; /* Remove extra space below SVG */
+            display: block;
         }
 
         button {
@@ -169,10 +199,6 @@
         <div class="input-section">
             <label for="barcodeData">Barcode Data:</label>
             <input type="text" id="barcodeData" placeholder="Enter barcode value">
-            <div id="barcodeDisplay">
-                <!-- Barcode will be rendered here by JsBarcode for immediate preview -->
-                <!-- We'll also target the svg element inside captureArea for the final image -->
-            </div>
         </div>
 
         <div class="input-section">
@@ -193,12 +219,21 @@
             <!-- The captured image will be displayed here -->
         </div>
 
-        <!-- This is the hidden div that will be captured by html2canvas -->
+        <!-- PREVIEW AREA: This will be visible and update in real-time -->
+        <div id="barcodePreviewArea">
+            <div class="preview-title">Preview of what will be captured:</div>
+            <div class="preview-barcode-container">
+                <svg id="barcodePreviewSvg"></svg>
+            </div>
+            <div class="print-name">Name: <span id="previewName"></span></div>
+            <div class="print-expiry">Exp: <span id="previewExp"></span></div>
+        </div>
+
+        <!-- HIDDEN CAPTURE AREA: This is what html2canvas actually captures -->
         <div id="captureArea" class="capture-area">
             <div class="printable-content">
                 <div class="print-name">Name: <span id="printName"></span></div>
                 <div class="print-barcode">
-                    <!-- JsBarcode will render the barcode into this SVG element for the final image -->
                     <svg id="barcodeSvg"></svg>
                 </div>
                 <div class="print-expiry">
@@ -210,106 +245,151 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- Get DOM Elements ---
             const nameInput = document.getElementById('name');
             const barcodeDataInput = document.getElementById('barcodeData');
             const expDayInput = document.getElementById('expDay');
             const expMonthInput = document.getElementById('expMonth');
             const expYearInput = document.getElementById('expYear');
 
-            // Elements in the hidden capture area
+            // Elements in the HIDDEN capture area
             const printNameSpan = document.getElementById('printName');
             const printExpSpan = document.getElementById('printExp');
-            const barcodeSvgElement = document.getElementById('barcodeSvg'); // The SVG element for JsBarcode
+            const barcodeSvgElement = document.getElementById('barcodeSvg'); // SVG for capture
 
-            // Input preview element for barcode
-            const barcodeDisplayDiv = document.getElementById('barcodeDisplay');
+            // Elements in the VISIBLE preview area
+            const previewNameSpan = document.getElementById('previewName');
+            const previewExpSpan = document.getElementById('previewExp');
+            const barcodePreviewSvgElement = document.getElementById('barcodePreviewSvg'); // SVG for preview
 
+            // The hidden area to be captured and the button
             const captureArea = document.getElementById('captureArea');
             const generateImageBtn = document.getElementById('generateImageBtn');
 
-            // --- Event Listeners for Real-time Updates ---
+            // --- Helper Functions ---
 
-            nameInput.addEventListener('input', () => {
-                printNameSpan.textContent = nameInput.value; // Update for capture
-            });
-
-            barcodeDataInput.addEventListener('input', () => {
-                const barcodeValue = barcodeDataInput.value;
-
-                // Update the immediate preview (this part was working)
-                if (barcodeValue) {
-                    JsBarcode(barcodeDisplayDiv, barcodeValue, {
-                        format: "CODE128",
-                        lineColor: "#000",
-                        width: 1.5, // Slightly thinner for preview
-                        height: 70,
-                        fontSize: 14,
-                        displayValue: true,
-                        textAlign: "center"
-                    });
-                } else {
-                    barcodeDisplayDiv.innerHTML = ''; // Clear preview if input is empty
+            // Generic function to render barcode to any target element
+            const renderBarcode = (targetElement, value, options = {}) => {
+                if (!targetElement || !value) {
+                    if (targetElement) targetElement.innerHTML = ''; // Clear if target exists but no value
+                    return;
                 }
-                // We will re-render to barcodeSvgElement when the button is clicked.
-            });
+                // Ensure the target element has basic SVG structure if it's empty
+                if (!targetElement.svgStyle) { // JsBarcode might set this internally
+                     targetElement.style.setProperty("visibility", "hidden"); // Hide until rendered
+                }
 
-            // Function to update the expiration date display and populate the print area
+
+                JsBarcode(targetElement, value, {
+                    format: "CODE128",
+                    lineColor: "#000",
+                    width: 2,
+                    height: 100,
+                    fontSize: 16,
+                    displayValue: true,
+                    textAlign: "center",
+                    ...options // Allow overriding default options
+                }).then(() => {
+                    // This callback is what we need! JsBarcode renders asynchronously.
+                    // When it's done, ensure visibility and signal readiness.
+                    targetElement.style.visibility = "visible";
+                    if (targetElement === barcodeSvgElement) { // If it's the capture target
+                        // We can signal that capture is ready if needed, but setTimeout handles it.
+                    }
+                }).catch(error => {
+                    console.error("JsBarcode rendering error:", error);
+                    targetElement.innerHTML = '<p style="color:red;">Error rendering barcode</p>';
+                });
+            };
+
+            // Function to update the expiration date display in BOTH preview and capture areas
             const updateExpirationDisplay = () => {
                 const day = expDayInput.value.padStart(2, '0');
                 const month = expMonthInput.value.padStart(2, '0');
                 const year = expYearInput.value;
+                const formattedDate = `${day}/${month}/${year}`;
 
-                if (day && month && year) {
-                    printExpSpan.textContent = `${day}/${month}/${year}`; // Update for capture
-                } else {
-                    printExpSpan.textContent = ''; // Clear if any part is missing
-                }
+                previewExpSpan.textContent = formattedDate;
+                printExpSpan.textContent = formattedDate;
             };
 
+            // --- Event Listeners for Real-time Updates ---
+
+            // Update Name in BOTH Preview and Capture Areas
+            nameInput.addEventListener('input', () => {
+                previewNameSpan.textContent = nameInput.value;
+                printNameSpan.textContent = nameInput.value;
+            });
+
+            // Update Barcode Data (Both Preview and Capture Area)
+            barcodeDataInput.addEventListener('input', () => {
+                const barcodeValue = barcodeDataInput.value;
+                // Render for preview (smaller, quicker)
+                renderBarcode(barcodePreviewSvgElement, barcodeValue, {
+                    width: 1.5,
+                    height: 70,
+                    fontSize: 14
+                });
+                // Render for capture (standard size) - this will update the hidden area
+                renderBarcode(barcodeSvgElement, barcodeValue);
+            });
+
+            // Update Expiration Date (in BOTH areas)
             expDayInput.addEventListener('input', updateExpirationDisplay);
             expMonthInput.addEventListener('input', updateExpirationDisplay);
             expYearInput.addEventListener('input', updateExpirationDisplay);
 
-            // Initial call to set the display if there's pre-filled data (optional)
-            updateExpirationDisplay();
+            // --- Initial Load ---
+            // Populate preview and capture areas with initial values
+            const initialName = nameInput.value;
+            const initialBarcode = barcodeDataInput.value;
+            const initialExpDay = expDayInput.value.padStart(2, '0');
+            const initialExpMonth = expMonthInput.value.padStart(2, '0');
+            const initialExpYear = expYearInput.value;
 
+            previewNameSpan.textContent = initialName;
+            printNameSpan.textContent = initialName;
 
-            // --- Image Capture Functionality ---
+            previewExpSpan.textContent = initialExpDay && initialExpMonth && initialExpYear ? `${initialExpDay}/${initialExpMonth}/${initialExpYear}` : '';
+            printExpSpan.textContent = initialExpDay && initialExpMonth && initialExpYear ? `${initialExpDay}/${initialExpMonth}/${initialExpYear}` : '';
 
+            renderBarcode(barcodePreviewSvgElement, initialBarcode, { width: 1.5, height: 70, fontSize: 14 });
+            renderBarcode(barcodeSvgElement, initialBarcode); // Render initial barcode for capture
+
+            // --- Image Capture Button Listener ---
             generateImageBtn.addEventListener('click', () => {
-                // 1. Ensure all current inputs are reflected in the hidden 'captureArea'
-                printNameSpan.textContent = nameInput.value;
-                updateExpirationDisplay(); // Re-render the date display for capture
+                // The captureArea and previewArea are already kept in sync by the input listeners.
+                // We just need to ensure the barcode for capture is *definitely* rendered.
+                // JsBarcode now has a .then() callback on its rendering process!
+                // So we can use that for reliable synchronization.
 
-                const barcodeValue = barcodeDataInput.value;
-                if (barcodeValue) {
-                    // *** THIS IS THE CRITICAL FIX ***
-                    // Render the barcode directly to the SVG element WITHIN captureArea
-                    // that html2canvas will capture.
-                    JsBarcode(barcodeSvgElement, barcodeValue, {
-                        format: "CODE128",
-                        lineColor: "#000",
-                        width: 2, // Standard width for final output
-                        height: 100,
-                        fontSize: 16,
-                        displayValue: true,
-                        textAlign: "center"
-                    });
-                } else {
-                    barcodeSvgElement.innerHTML = ''; // Clear SVG if input is empty
+                const barcodeValueForCapture = barcodeDataInput.value;
+
+                if (!barcodeValueForCapture) {
+                    alert("Please enter barcode data.");
+                    return;
                 }
 
-                // 2. Use html2canvas to capture the 'captureArea' div
-                // Give a small delay to ensure JsBarcode has finished rendering.
+                // Call renderBarcode for the capture element, it returns a promise
+                renderBarcode(barcodeSvgElement, barcodeValueForCapture);
+
+                // JsBarcode's render function itself returns a promise.
+                // However, this promise is for the *rendering operation*, not necessarily
+                // that the DOM is updated and ready for html2canvas.
+                // For reliable capture, we still need a small delay after the render call.
+                // The new JsBarcode API `then` is for when the rendering is *complete*.
+
+                // Let's re-apply a render, and then a timeout.
+                renderBarcode(barcodeSvgElement, barcodeValueForCapture); // Ensure it's triggered
+
+                // Use setTimeout to wait for the rendering to complete.
+                // This is generally the most robust way for libraries without explicit 'rendered' events.
                 setTimeout(() => {
                     html2canvas(captureArea, {
                         useCORS: true,
                         logging: true
                     }).then(canvas => {
-                        // Convert the canvas to a data URL (PNG format)
                         const imgData = canvas.toDataURL("image/png");
-
-                        // Display the generated image and provide instructions
                         const outputImageContainer = document.getElementById('outputImageContainer');
                         outputImageContainer.innerHTML = `
                             <p>Right-click on the image below and select "Copy Image" or "Save Image As..."</p>
@@ -319,7 +399,7 @@
                         console.error("Error capturing image:", err);
                         alert("Failed to capture image. Please check the console for more details.");
                     });
-                }, 100); // 100ms delay
+                }, 200); // A safe delay for rendering and DOM update
             });
         });
     </script>
